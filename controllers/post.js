@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var getUrls = require('get-urls');
 var async = require('async');
 var http = require('http');
-
+const uniqid = require('uniqid');
 var get_preview = function(url, callback) {
     var options = {
         hostname: '54.244.251.242',
@@ -73,21 +73,22 @@ exports.addPost = (req,res)=>{
 var addPostToDb = (req,res,postObj)=>{
 	console.log("in callback");
 			var newPost = new Post({
-			postText: req.body.post_text, 
-			date: Date.now(),
-			likes: 0,
-			dislikes: 0,
-			userId: postObj.userId,
-			url: postObj.url,
-			mediaType: postObj.mediaType,
-			videoObj: postObj.video,
-			imageSrc: postObj.image,
-			mediaFlag: postObj.mediaFlag,
-			videoFlag: postObj.videoFlag,
-			imageFlag: postObj.imageFlag,
-			linkTitle: postObj.title,
-			linkDescription: postObj.description,
-			community: postObj.community
+				_id: uniqid(),
+				postText: req.body.post_text, 
+				date: Date.now(),
+				likes: 0,
+				dislikes: 0,
+				userId: postObj.userId,
+				url: postObj.url,
+				mediaType: postObj.mediaType,
+				videoObj: postObj.video,
+				imageSrc: postObj.image,
+				mediaFlag: postObj.mediaFlag,
+				videoFlag: postObj.videoFlag,
+				imageFlag: postObj.imageFlag,
+				linkTitle: postObj.title,
+				linkDescription: postObj.description,
+				community: postObj.community
 			});
 			newPost.save(function(res){
 			console.log("Post saved");

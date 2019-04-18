@@ -59,61 +59,75 @@ var process_preview = function(postObjects, funccallback){
 
 exports.index = (req, res) => {
 Post.find({},function(err,result){
-	if(result.length == 0)
-		{	res.render('home', {
-		    title: 'Home',
-		    posts:[]
-			})
-		}
+	// if(result.length == 0)
+	// 	console.log('entered if');
+	// 	{	res.render('home', {
+	// 	    title: 'Home',
+	// 	    posts:[]
+	// 		})
+	// 	}
 	if(!req.user){
+		console.log('entered user if');
 		res.render('home',{
 			title:'Home',
 			posts:[]
 		});
 	}
 	else{
+		console.log('entered user else');
 	var userId = req.user._id;
+	console.log('userId',userId)
 	var i = 0;
 	var finalResult = [];
-	result.forEach(function(obj){
-		i++;
-		var postObj = {};
-		postObj.likeFlag = false;
-		postObj.dislikeFlag = false;
-		postObj._id = obj._id;
-		postObj.postText = obj.postText;
-		postObj.likes = obj.likes;
-		postObj.dislikes = obj.dislikes;
-		postObj.mediaType = obj.mediaType;
-		postObj.videoObj = obj.videoObj;
-		postObj.imageSrc = obj.imageSrc;
-		postObj.media = obj.mediaFlag;
-		postObj.videoFlag = obj.videoFlag;
-		postObj.url = obj.url;
-		postObj.linkTitle = obj.linkTitle;
-		if(obj.community)
-			postObj.community = obj.community.toUpperCase();
-		if(obj.linkDescription && obj.linkDescription.length>150)
-			postObj.linkDescription = obj.linkDescription.slice(0,147)+"....";
-		else
-			postObj.linkDescription = obj.linkDescription;
-		if(!postObj.videoFlag)
-			postObj.imageFlag = obj.imageFlag;
-		console.log("temp after appending");
-		if(obj.likeVotes.indexOf(userId) != -1)
-			postObj.likeFlag = true;
-		if(obj.dislikeVotes.indexOf(userId) != -1)
-			postObj.dislikeFlag = true;
-		// console.log("while render ",postObj);
-		finalResult.push(postObj);
-		if(i == result.length)
+	console.log('result',result)
+	if(result && result.length){
+		result.forEach(function(obj){
+			console.log('obj',obj)
+			i++;
+			var postObj = {};
+			postObj.likeFlag = false;
+			postObj.dislikeFlag = false;
+			postObj._id = obj._id;
+			postObj.postText = obj.postText;
+			postObj.likes = obj.likes;
+			postObj.dislikes = obj.dislikes;
+			postObj.mediaType = obj.mediaType;
+			postObj.videoObj = obj.videoObj;
+			postObj.imageSrc = obj.imageSrc;
+			postObj.media = obj.mediaFlag;
+			postObj.videoFlag = obj.videoFlag;
+			postObj.url = obj.url;
+			postObj.linkTitle = obj.linkTitle;
+			if(obj.community)
+				postObj.community = obj.community.toUpperCase();
+			if(obj.linkDescription && obj.linkDescription.length>150)
+				postObj.linkDescription = obj.linkDescription.slice(0,147)+"....";
+			else
+				postObj.linkDescription = obj.linkDescription;
+			if(!postObj.videoFlag)
+				postObj.imageFlag = obj.imageFlag;
+			console.log("temp after appending");
+			if(obj.likeVotes.indexOf(userId) != -1)
+				postObj.likeFlag = true;
+			if(obj.dislikeVotes.indexOf(userId) != -1)
+				postObj.dislikeFlag = true;
+			finalResult.push(postObj);
+			if(i == result.length)
+			{	res.render('home', {
+			    title: 'Home',
+			    posts:finalResult,
+			    communityPage:false
+				})
+			}
+		})
+	}else{
 		{	res.render('home', {
 		    title: 'Home',
-		    posts:finalResult,
+		    posts:[],
 		    communityPage:false
 			})
 		}
-	})
+	}
 }
 })
 };

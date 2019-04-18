@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const passport = require('passport');
 const _ = require('lodash');
 const User = require('../models/User');
+const uniqid = require('uniqid');
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
@@ -94,6 +95,7 @@ exports.postSignup = (req, res, next) => {
   }
 
   const user = new User({
+    _id: uniqid(),
     email: req.body.email,
     password: req.body.password
   });

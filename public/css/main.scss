@@ -21,7 +21,7 @@ body {
   padding-top: 80px;
   margin-bottom: 75px;
   font-size: 14px;
-  background:url("/home/crowdchat/Documents/fake_news/attractive-backdrop-background-988872.jpg");
+  /*background:url("/home/crowdchat/Documents/fake_news/attractive-backdrop-background-988872.jpg");*/
   background-size: cover;
 }
 
@@ -51,6 +51,7 @@ textarea {
   width: 30px;
   min-height: 30px;
   margin: -15px 15px -15px;
+  border-radius: 50%;
 }
 .fa-clickable {
     cursor:pointer;
@@ -205,4 +206,42 @@ display: block;
   &:hover, &:active {
     background-color: #f1ef00;
   }
+}
+
+.searchbar {
+  position: relative;
+  height: 30px;
+  background-color: #E8E8E8;
+  padding: 5px;
+  border-radius: 30px;
+}
+.search_input {
+  color: #808080;
+  outline: 0;
+  padding: 0 10px;
+  width: 200px;
+  caret-color: #808080;
+  background: none;
+}
+.search_icon {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: #808080 !important;
+  text-decoration: none !important;
+}
+.search_icon > i {
+  margin: auto;
+  -webkit-appearance:none;
+  font-size: 16px;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #808080;
+  opacity: 1; /* Firefox */
 }

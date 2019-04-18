@@ -1,4 +1,4 @@
-.navbar.navbar-light.fixed-top.navbar-expand-lg(style="background-color:#efefef")
+.navbar.navbar-light.fixed-top.navbar-expand-lg
   .container
     a.navbar-brand(href='/')
       img.site-logo(src='/img/thecube.png')
@@ -20,10 +20,11 @@
           a.nav-link(href='/mypost') My Post
         li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
           a.nav-link(href='/contact') Contact
-      form.searchForm.ml-auto(action="/search", method="post" style="border:solid 1px;border-radius:2px")
-        span
-          input.searchInput(type="text" id="search_value" style = "border:0px" name="search_value" value="search in posts")
-          i.fa.fa-search.searchBtn(type="submit")
+      form.searchForm.ml-auto(action="/search", method="post")
+        div.searchbar
+          input.searchInput.search_input(type="text" id="search_value" style = "border:0px" name="search_value" placeholder="Search Posts..." autocomplete="off")
+          a.search_icon(href="#")
+            i.fa.fa-search.searchBtn(type="submit")
       ul.nav.navbar-nav
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)
