@@ -21,6 +21,8 @@ body {
   padding-top: 80px;
   margin-bottom: 75px;
   font-size: 14px;
+  background:url("/home/crowdchat/Documents/fake_news/attractive-backdrop-background-988872.jpg");
+  background-size: cover;
 }
 
 footer {
@@ -50,7 +52,10 @@ textarea {
   min-height: 30px;
   margin: -15px 15px -15px;
 }
-
+.fa-clickable {
+    cursor:pointer;
+    outline:none;
+}
 .navbar{
   padding-top: 0px;
   padding-bottom: 0px;
@@ -62,12 +67,56 @@ textarea {
   font-size: 18px;
   float: left;
 }
+.site-logo{
+        float: left;
+        position: relative;
+        top: -3px;
+        width: 30px;
+        margin-right: 5px;
+    }
+.fill-post{
+  height:100px;
+  width:75%;
+}    
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin:10px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+display: block;
+}
+
 
 .navbar-toggler {
   position: relative;
   float: right;
   margin-bottom: 8px;
   margin-top: 8px;
+}
+
+.btn-raised{
+  position:absolute;
+  bottom:10px;
+  margin-left:10px;
 }
 
 .navbar-toggler-icon {

@@ -6,12 +6,13 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='theme-color' content='#4DA5F4')
     meta(name='csrf-token', content=_csrf)
-    title #{title} - Hackathon Starter
+    title #{title} - FakeOrNotFake
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
+    link(rel='stylesheet', href='/css/style.css')
     script(src='/js/lib/Chart.min.js')
 
-  body
+  body(style="background-color:#f9f7f7")
     include partials/header
 
     .container
@@ -24,6 +25,7 @@ html
     script(src='/js/lib/popper.min.js')
     script(src='/js/lib/bootstrap.min.js')
     script(src='/js/main.js')
+    script(src='/js/home.js')
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID
     script.

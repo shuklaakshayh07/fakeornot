@@ -242,6 +242,7 @@ passport.use(new TwitterStrategy({
   callbackURL: `${process.env.BASE_URL}/auth/twitter/callback`,
   passReqToCallback: true
 }, (req, accessToken, tokenSecret, profile, done) => {
+  console.log(`${process.env.BASE_URL}/auth/twitter/callback`);
   if (req.user) {
     User.findOne({ twitter: profile.id }, (err, existingUser) => {
       if (err) { return done(err); }

@@ -34,6 +34,7 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const postController = require('./controllers/post');
 
 /**
  * API keys and Passport configuration.
@@ -51,7 +52,7 @@ const app = express();
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect("mongodb://localhost:3001/meteor");
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
@@ -88,13 +89,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use((req, res, next) => {
-  if (req.path === '/api/upload') {
-    next();
-  } else {
-    lusca.csrf()(req, res, next);
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.path === '/api/upload') {
+//     next();
+//   } else {
+//     lusca.csrf()(req, res, next);
+//   }
+// });
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.disable('x-powered-by');
@@ -143,6 +144,15 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+app.post('/poster',postController.addPost);
+app.get('/mypost',postController.showUserPost);
+app.post('/posterActionLike',postController.likePost);
+app.post('/posterActionDislike',postController.dislikePost);
+app.get('/communities/:communtiyType',postController.getCommunityPost);
+app.post('/search',postController.searchPost);
+//   function(req,res){
+//   console.log(req);
+// });
 
 /**
  * API examples routes.
@@ -178,6 +188,7 @@ app.post('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuth
 app.get('/api/google-maps', apiController.getGoogleMaps);
 app.get('/api/chart', apiController.getChart);
 
+
 /**
  * OAuth authentication routes. (Sign in)
  */
@@ -207,7 +218,7 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedi
 });
 app.get('/auth/linkedin', passport.authenticate('linkedin', { state: 'SOME STATE' }));
 app.get('/auth/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect(req.session.returnTo || '/');
+  res.failureRedirectt(req.session.returnTo || '/');
 });
 
 /**

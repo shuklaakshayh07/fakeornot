@@ -1,0 +1,258 @@
+@import (less) "lib/animate.css";
+@import (less) "lib/font-awesome.min.css";
+@import "lib/bootstrap/bootstrap";
+@import "themes/default";
+
+// Scaffolding
+// ---- ---------------------
+
+html, body {
+  height: 100%;
+}
+
+body {
+  padding-top: 70px;
+  background:  #fff url('../img/tile_cntr_bg.png') repeat;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto;
+  /* Pad bottom by footer height + (optional) extra spacing */
+  padding: 0 0;
+}
+
+#footer {
+  height: 110px;
+  padding-top: 15px;
+}
+
+// Navbar
+// -------------------------
+
+@navbar-height: 45px;
+
+.navbar {
+    background-color: #fefefe;
+    .search-wrpr{
+        padding:5px 9px 0;
+        @media (max-width:767px) {
+           padding:5px 9px 5px; 
+        }
+    }
+    .site-logo{
+        float: left;
+        position: relative;
+        top: -3px;
+        width: 30px;
+        margin-right: 5px;
+    }
+}
+.navbar-nav .profile-image {
+  width: 30px;
+  height: 30px;
+  margin: -15px 15px -15px 0;
+}
+
+.navbar-brand {
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: left center;
+  height: 45px;
+  font-size: 28px;
+}
+
+// Social Buttons
+// -------------------------
+
+.btn-facebook {
+  color: #fff;
+  background: #3b5998;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.btn-twitter {
+  color: #fff;
+  background: #00aced;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+
+
+.btn-google-plus {
+  color: #fff;
+  background: #dd4b39;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.btn-github {
+  color: #fff;
+  background: #333;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+// Extra space between font-awesome icons and text
+[class^="fa-"],
+[class*="fa-"] {
+  margin-right: 5px;
+}
+
+// Thumbnails
+.thumb {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.thumb img {
+  margin-bottom: 5px;
+  margin-right: 5px;
+  opacity: 0.2;
+  transition: opacity 0.2s;
+}
+
+.thumb:hover img {
+  opacity: 1;
+  box-shadow: 0 0 3px 1px @brand-primary;
+}
+
+.facebook-caption {
+  position: absolute;
+  background-color: rgba(0,0,0,0.5);
+  font-size: 12px;
+  color: #fff;
+  padding: 3px;
+  bottom: 25px;
+}
+
+//common-styles
+.pos-rel {
+    position: relative;
+}
+.pos-fxd {
+    position: fixed;
+}
+.pos-abs {
+    position: absolute;
+}
+.width-100 {
+    width: 100%;
+}
+.disp-inl-bl {
+    display: inline-block;
+}
+.disp-none {
+    display: none;
+}
+.hddn-sbmt {
+    height: 0px;
+    width: 0px;
+    padding: 0px;
+    position: absolute;
+    top: -1000px;
+}
+.inln-sbmt {
+    position: absolute;
+    right: 15px;
+    top: 6px;
+    color: #bbb;
+    cursor: pointer;
+}
+.text-center{
+    text-align: center;
+}
+.icon-twit {
+    color: #428bca;
+}
+.icon-lnkdn {
+    color: rgb(35,135,189);
+}
+.icon-fb {
+    color: rgb(65,94,155);
+    @media (max-width:992px) {
+        position: relative;
+        top: 2px;
+    }
+}
+.mar-bot-10{
+    margin-bottom: 10px; 
+}
+.mar-top-20{
+    margin-top: 20px;
+}
+
+// search-styles
+.search-form {
+    .ppl-icon {
+        position: absolute;
+        left: 15px;
+        z-index: 1;
+        top: 10px;
+        color:#aaa;
+        cursor: pointer;
+    }
+    input.search-box {
+        border-radius: 15px;
+        background-color: #eee;
+        color: #666;
+        width: 250px;
+        padding-left: 35px;
+        padding-right: 30px;
+    }
+    .search-icon {
+        color:#aaa;
+        position:absolute;
+        left:225px;
+        top:10px;
+        z-index:1;
+        cursor: pointer;
+    }
+    .tt-dropdown-menu {
+        background-color: #eee;
+        padding: 5px;
+        border-radius: 3px;
+        width: 100%;
+        .tt-suggestion {
+            padding: 0 3px;
+            border-radius: 3px;
+        }
+        .tt-cursor {
+            cursor: pointer;
+            background-color: #fff;
+        }
+    }
+}
+
+// alert-styles
+.alert-cntr {
+    z-index: 9999;
+    .discard-alert {
+        position: absolute;
+        top: 1px;
+        right: 0px;
+        cursor: pointer;
+    }
+}
+
+// hard-styles
+#importFile {
+    display: inline-block !important;
+}

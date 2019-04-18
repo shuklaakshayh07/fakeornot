@@ -40,6 +40,7 @@
     "express-status-monitor": "^1.2.3",
     "express-validator": "^5.3.1",
     "fbgraph": "^1.4.4",
+    "get-urls": "^9.0.0",
     "instagram-node": "^0.5.8",
     "jquery": "^3.3.1",
     "lastfm": "^0.9.3",

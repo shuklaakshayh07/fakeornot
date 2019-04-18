@@ -1,22 +1,30 @@
-.navbar.navbar-light.fixed-top.navbar-expand-lg
+.navbar.navbar-light.fixed-top.navbar-expand-lg(style="background-color:#efefef")
   .container
     a.navbar-brand(href='/')
-      i.fas.fa-cube
-      | Project name
+      img.site-logo(src='/img/thecube.png')
+      | Cube365
     button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-collapse')
       span.sr-only Toggle navigation
       span.navbar-toggler-icon
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li.nav-item(class=(title === 'Home') ? 'active' : undefined)
-          a.nav-link(href='/') Home
-        li.nav-item(class=(title === 'API Examples') ? 'active' : undefined)
-          a.nav-link(href='/api') API Examples
+          .dropdown
+            .button.dropbtn COMMUNITIES
+              .dropdown-content
+                a.nav-link(href="/communities/tech") Tech
+                a.nav-link(href="/communities/politics") Politics
+                a.nav-link(href="/communities/world") World
+                a.nav-link(href="/communities/currentaffairs") Current Affairs
+        li.nav-item(class=(title === 'MyPost') ? 'active' : undefined)
+          a.nav-link(href='/mypost') My Post
         li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
           a.nav-link(href='/contact') Contact
-        li.nav-item(class=(title === 'Status') ? 'active' : undefined)
-          a.nav-link(href='/status') Status
-      ul.nav.navbar-nav.ml-auto
+      form.searchForm.ml-auto(action="/search", method="post" style="border:solid 1px;border-radius:2px")
+        span
+          input.searchInput(type="text" id="search_value" style = "border:0px" name="search_value" value="search in posts")
+          i.fa.fa-search.searchBtn(type="submit")
+      ul.nav.navbar-nav
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)
             a.nav-link(href='/login') Login

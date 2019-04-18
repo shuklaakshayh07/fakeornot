@@ -1,0 +1,50 @@
+extends layout
+block content
+  h1 Fake News Repo
+  hr
+  .row
+    div.col-md-4
+      h4(style="position:absolute;top:50%;margin-left:50px") Check Fake OR Not:
+    div.col-md-6(style="display:block")
+      form.postForm
+        textarea.fill-post(type = "text", style="display:inline"  placeholder="Share some post...." )
+        select.communities(required=required style="width:75%")
+          option(value = "noValue") Please, Select a community
+          option(value = "tech") Tech
+          option(value = "politics") Politics
+          option(value = "world") World
+          option(value = "currentAffairs") Current Affairs
+        button.btn.btn-success.btn-raised(style="display:inline;bottom:40%") Submit Post »
+  .row(style="margin-top:15px; text-align: center;padding:30px;padding-right:5px;padding-left:5px;")
+    each post in posts
+      .block_container.col-xs-4(class="post:"+post._id data-id=post._id style="display:inline;border:1px white solid;margin-top:5px;margin-right:2px;width:362px;padding:2px;position:relative;border: solid 2px;border-radius:12px")
+        .postBlock(style="margin-bottom:40px;")
+          if !communityPage
+            .showPostCommunity(style = "float:right; background-color: grey; padding:2px;border-radius:12px")
+              | #{post.community}
+          .postTextdiv(style='text-align:justify;padding:10px;font-size:16px;overflow-wrap: break-word;')
+            | #{post.postText}
+          if post.media
+            .mediadiv(style="border-style:solid; border-width:1px 0px 0px 0px;padding:2px;")
+              a.urlTitle(href=post.url target="_blank" style="font-size:16px") #{post.linkTitle} :
+              span(style="font-size:12px;text-align:left") #{post.linkDescription}
+              if post.videoFlag
+                .iframeDiv
+                  iframe(src=post.videoObj.src)
+              if post.imageFlag
+                .imageDiv
+                  img(src=post.imageSrc style="width:300px")
+        .reactionBlock(style="bottom:0px;margin:2px;position:absolute")
+          .reactionOption
+            .likeDiv(style="background-color: grey;max-height:25px;max-width:45px;display:inline;float:left;padding:2px;border:solid 1px;border-radius:12px")
+              if post.likeFlag
+                i.far.fa-clickable.fa-thumbs-up.ab(style="float:left;color:#dbdbef;margin-top:2px;" data-id=post._id)
+              else
+                i.far.fa-clickable.fa-thumbs-up.ba(style="float:left;margin-top:2px;" data-id=post._id)
+              span.likeCount(style="float:left") #{post.likes}
+            .dislikeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px")
+              span.dislikeCount(style="float:right") #{post.dislikes}
+              if post.dislikeFlag
+                i.far.fa-clickable.fa-thumbs-down(style="float:left;color:red;margin-top:2px;" data-id=post._id)
+              else
+                i.far.fa-clickable.fa-thumbs-down(style="float:left;margin-top:2px;" data-id=post._id)
