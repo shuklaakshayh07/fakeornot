@@ -66,16 +66,12 @@ Post.find({},function(err,result){
 	// 	    posts:[]
 	// 		})
 	// 	}
-	if(!req.user){
-		console.log('entered user if');
-		res.render('home',{
-			title:'Home',
-			posts:[]
-		});
+	if(req.user){
+		var userId = req.user._id;	
 	}
 	else{
-		console.log('entered user else');
-	var userId = req.user._id;
+		var userId = "";
+	}
 	console.log('userId',userId)
 	var i = 0;
 	var finalResult = [];
@@ -128,6 +124,5 @@ Post.find({},function(err,result){
 			})
 		}
 	}
-}
 })
 };

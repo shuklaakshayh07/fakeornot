@@ -2,24 +2,27 @@ extends layout
 block content
   h1(style="text-align:center;") Fake News Repo
   hr
-  .row
-    h2.col-xs-12.col-md-12 Share Your Post
-    div.col-xs-12.col-md-8(style="margin-top:1rem;")
-      form.postForm
-        div.form-group
-          label Post Url:
-          span.compulsory * 
-          input.form-control.fill-post(type = "text" placeholder="URL" )
-        div.form-group
-          label Select Community:
-          span.compulsory * 
-          select.form-control.communities(required=required)
-            option(value = "" hidden) Community
-            option(value = "tech") Tech
-            option(value = "politics") Politics
-            option(value = "world") World
-            option(value = "currentAffairs") Current Affairs
-        button.btn.btn-primary(style="border-radius:0.25rem;background-color:#2577fb;border-color:#0461f7;") Submit
+  if !user
+    h3 Please login to share your posts
+  else
+    .row
+      h2.col-xs-12.col-md-12 Share Your Post
+      div.col-xs-12.col-md-8(style="margin-top:1rem;")
+        form.postForm
+          div.form-group
+            label Post Url:
+            span.compulsory * 
+            input.form-control.fill-post(type = "text" placeholder="URL" )
+          div.form-group
+            label Select Community:
+            span.compulsory * 
+            select.form-control.communities(required=required)
+              option(value = "" hidden) Community
+              option(value = "tech") Tech
+              option(value = "politics") Politics
+              option(value = "world") World
+              option(value = "currentAffairs") Current Affairs
+          button.btn.btn-primary(style="border-radius:0.25rem;background-color:#2577fb;border-color:#0461f7;") Submit
   .row(style="margin-top:15px; text-align: center;padding:30px;padding-right:5px;padding-left:5px;")
     h2.col-xs-12.col-md-12(style="margin-top:1rem;text-align:left;") Latest Posts
     .card-columns.col-md-12(style="margin-top:1rem;")
@@ -37,19 +40,20 @@ block content
                 a.urlTitle(href=post.url target="_blank" style="font-size:16px;")
                   label(style="font-weight:bold;color:black;padding:0 7px;margin-bottom:0px") #{post.linkTitle}
                 div(style="font-size:12px;text-align:left;padding-left:5px;color:#9b9b9b;padding:0 7px") #{post.linkDescription}
-          .reactionBlock(style="bottom:0px;margin-top:10px;margin-left:2px;position:relative")
-            .reactionOption
-              .likeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;")
-                if post.likeFlag
-                  i.far.fa-clickable.fa-thumbs-up.ab(style="float:left;color:rgb(94, 152, 170);margin-top:2px;font-size:18px" data-id=post._id)
-                else
-                  i.far.fa-clickable.fa-thumbs-up.ba(style="float:left;margin-top:2px;font-size:18px;" data-id=post._id)
-                span.likeCount(style="float:left;font-size:16px;position:relative;top:2px") #{post.likes}
-              .dislikeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;margin-left:1rem")
-                span.dislikeCount(style="float:right;position:relative;top:2px;font-size:16px") #{post.dislikes}
-                if post.dislikeFlag
-                  i.far.fa-clickable.fa-thumbs-down(style="float:left;color:red;margin-top:4px;font-size:18px" data-id=post._id)
-                else
-                  i.far.fa-clickable.fa-thumbs-down(style="float:left;margin-top:4px;font-size:18px" data-id=post._id)
-              .commentDiv
-                i.fa.fa-comments-o
+          if user
+            .reactionBlock(style="bottom:0px;margin-top:10px;margin-left:2px;position:relative")
+              .reactionOption
+                .likeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;")
+                  if post.likeFlag
+                    i.far.fa-clickable.fa-thumbs-up.ab(style="float:left;color:rgb(94, 152, 170);margin-top:2px;font-size:18px" data-id=post._id)
+                  else
+                    i.far.fa-clickable.fa-thumbs-up.ba(style="float:left;margin-top:2px;font-size:18px;" data-id=post._id)
+                  span.likeCount(style="float:left;font-size:16px;position:relative;top:2px") #{post.likes}
+                .dislikeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;margin-left:1rem")
+                  span.dislikeCount(style="float:right;position:relative;top:2px;font-size:16px") #{post.dislikes}
+                  if post.dislikeFlag
+                    i.far.fa-clickable.fa-thumbs-down(style="float:left;color:red;margin-top:4px;font-size:18px" data-id=post._id)
+                  else
+                    i.far.fa-clickable.fa-thumbs-down(style="float:left;margin-top:4px;font-size:18px" data-id=post._id)
+                .commentDiv
+                  i.fa.fa-comments-o
