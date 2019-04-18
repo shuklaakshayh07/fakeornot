@@ -24,7 +24,20 @@ body {
   /*background:url("/home/crowdchat/Documents/fake_news/attractive-backdrop-background-988872.jpg");*/
   background-size: cover;
 }
+a {
+  color:#80807f;
+}
+a:hover {
+  cursor:pointer;
+}
+.urlTitle > label:hover {
+  cursor: pointer;
 
+}
+.urlTitle > label{
+  line-height:1.4;
+  margin-top: 7px;
+}
 footer {
   position: absolute;
   bottom: 0;

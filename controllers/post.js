@@ -181,7 +181,9 @@ exports.searchPost = (req,res)=>{
 			console.log("error in fetching post");
 		else{
 			if(result.length == 0)
-				console.log("no post found");
+				{console.log("no post found");
+				 res.render('noResult');
+				}
 			else{
 				console.log(result);
 					var i = 0;

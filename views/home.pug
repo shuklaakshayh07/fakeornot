@@ -24,33 +24,32 @@ block content
     h2.col-xs-12.col-md-12(style="margin-top:1rem;text-align:left;") Latest Posts
     .card-columns.col-md-12(style="margin-top:1rem;")
       each post in posts
-        .card(style="padding:5px;border:solid black 1px")
-          .postTextdiv(style='text-align:justify;padding:10px;font-size:16px;overflow-wrap: break-word;')
-            | #{post.postText}
+        .card(style="padding:5px;border:solid #9b9b9b 1px" data-id=post._id)
           if post.media
             .card-block.mediaPreview(style="border:solid grey 1px")
-              .mediadiv
-                a.urlTitle(href=post.url target="_blank" style="font-size:16px") #{post.linkTitle} :
-                span(style="font-size:12px;text-align:left") #{post.linkDescription}
+              a.mediadiv(href=post.url)
                 if post.videoFlag
                   .iframeDiv
                     iframe(src=post.videoObj.src)
                 if post.imageFlag
-                  .imageDiv
-                    img(src=post.imageSrc style="width:300px")
+                  .imageDiv(style="position: relative;height: 0;padding-bottom: 56.25%;")
+                    img(src=post.imageSrc style="position: absolute;width: 100%;height: 100%;top: 0;left: 0;object-fit: cover;")
+                a.urlTitle(href=post.url target="_blank" style="font-size:16px;padding-left:5px")
+                  label(style="font-weight:bold;color:black") #{post.linkTitle}
+                div(style="font-size:12px;text-align:left;padding-left:5px;color:#9b9b9b") #{post.linkDescription}
           .reactionBlock(style="bottom:0px;margin-top:10px;margin-left:2px;position:relative")
             .reactionOption
-              .likeDiv(style="background-color: grey;max-height:25px;max-width:45px;display:inline;float:left;padding:2px;border:solid 1px;border-radius:12px")
+              .likeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;")
                 if post.likeFlag
-                  i.far.fa-clickable.fa-thumbs-up.ab(style="float:left;color:#dbdbef;margin-top:2px;" data-id=post._id)
+                  i.far.fa-clickable.fa-thumbs-up.ab(style="float:left;color:rgb(94, 152, 170);margin-top:2px;font-size:18px" data-id=post._id)
                 else
-                  i.far.fa-clickable.fa-thumbs-up.ba(style="float:left;margin-top:2px;" data-id=post._id)
-                span.likeCount(style="float:left") #{post.likes}
-              .dislikeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px")
-                span.dislikeCount(style="float:right") #{post.dislikes}
+                  i.far.fa-clickable.fa-thumbs-up.ba(style="float:left;margin-top:2px;font-size:18px;" data-id=post._id)
+                span.likeCount(style="float:left;font-size:16px;position:relative;top:2px") #{post.likes}
+              .dislikeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;margin-left:1rem")
+                span.dislikeCount(style="float:right;position:relative;top:2px;font-size:16px") #{post.dislikes}
                 if post.dislikeFlag
-                  i.far.fa-clickable.fa-thumbs-down(style="float:left;color:red;margin-top:2px;" data-id=post._id)
+                  i.far.fa-clickable.fa-thumbs-down(style="float:left;color:red;margin-top:4px;font-size:18px" data-id=post._id)
                 else
-                  i.far.fa-clickable.fa-thumbs-down(style="float:left;margin-top:2px;" data-id=post._id)
+                  i.far.fa-clickable.fa-thumbs-down(style="float:left;margin-top:4px;font-size:18px" data-id=post._id)
               .commentDiv
                 i.fa.fa-comments-o

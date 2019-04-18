@@ -29,20 +29,21 @@ $(document).ready(function(){
 		var postMeta = {};
 		postMeta["postId"] = postId;
 		console.log("before calling like",postMeta);
-		var likeCount = parseInt($('.block_container[data-id='+postId+']').find('.likeCount').html());
-		var dislikeCount = parseInt($('.block_container[data-id='+postId+']').find('.dislikeCount').html());
+		var likeCount = parseInt($('.card[data-id='+postId+']').find('.likeCount').html());
+		var dislikeCount = parseInt($('.card[data-id='+postId+']').find('.dislikeCount').html());
 		$.post("/posterActionLike",postMeta,function(data, status){ console.log("data",data);
 			if(data['like'] && data["prev_type"]){console.log("1st");
-				$('.block_container[data-id='+postId+']').find('.likeCount').html(likeCount-1);
-				$('.block_container[data-id='+postId+']').find('.fa-thumbs-up').css('color','');	
+				$('.card[data-id='+postId+']').find('.likeCount').html(likeCount-1);
+				$('.card[data-id='+postId+']').find('.fa-thumbs-up').css('color','');	
 			}
 			else if(data["prev_type"] == -1){console.log("2nd");
-				$('.block_container[data-id='+postId+']').find('.dislikeCount').html(dislikeCount-1);
-				$('.block_container[data-id='+postId+']').find('.fa-thumbs-down').css('color','');
+				$('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount-1);
+				$('.card[data-id='+postId+']').find('.fa-thumbs-down').css('color','');
 			}
 			else if(data["like"]){console.log("3rd");
-				$('.block_container[data-id='+postId+']').find('.likeCount').html(likeCount+1);
-				$('.block_container[data-id='+postId+']').find('.fa-thumbs-up').css('color','#dbdbef');
+				console.log($('.card[data-id='+postId+']').find('.likeCount'));
+				$('.card[data-id='+postId+']').find('.likeCount').html(likeCount+1);
+				$('.card[data-id='+postId+']').find('.fa-thumbs-up').css('color','rgb(94, 152, 170)');
 			}
 		});
 	})
@@ -52,21 +53,21 @@ $(document).ready(function(){
 		var postId = $(this).attr("data-id")
 		var postMeta = {};
 		postMeta["postId"] = postId;
-		var dislikeCount = parseInt($('.block_container[data-id='+postId+']').find('.dislikeCount').html());
-		var likeCount = parseInt($('.block_container[data-id='+postId+']').find('.likeCount').html());
-		// $('.block_container[data-id='+postId+']').find('.dislikeCount').html(dislikeCount+1);
+		var dislikeCount = parseInt($('.card[data-id='+postId+']').find('.dislikeCount').html());
+		var likeCount = parseInt($('.card[data-id='+postId+']').find('.likeCount').html());
+		// $('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount+1);
 		$.post("/posterActionDislike",postMeta,function(data, status){
 			if(data["dislike"] && data["prev_type"] == -1){
-				$('.block_container[data-id='+postId+']').find('.dislikeCount').html(dislikeCount-1);
-				$('.block_container[data-id='+postId+']').find('.fa-thumbs-down').css('color','');	
+				$('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount-1);
+				$('.card[data-id='+postId+']').find('.fa-thumbs-down').css('color','');	
 			}
 			else if(data["prev_type"]){
-				$('.block_container[data-id='+postId+']').find('.likeCount').html(likeCount-1);
-				$('.block_container[data-id='+postId+']').find('.fa-thumbs-up').css('color','');
+				$('.card[data-id='+postId+']').find('.likeCount').html(likeCount-1);
+				$('.card[data-id='+postId+']').find('.fa-thumbs-up').css('color','');
 			}
 			else if(data["dislike"]){
-				$('.block_container[data-id='+postId+']').find('.dislikeCount').html(dislikeCount+1);
-				$('.block_container[data-id='+postId+']').find('.fa-thumbs-down').css('color','red');
+				$('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount+1);
+				$('.card[data-id='+postId+']').find('.fa-thumbs-down').css('color','red');
 			}
 		});
 	})
