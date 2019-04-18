@@ -69,16 +69,12 @@ textarea {
   float: left;
 }
 .site-logo{
-        float: left;
-        position: relative;
-        top: -3px;
-        width: 30px;
-        margin-right: 5px;
-    }
-.fill-post{
-  height:100px;
-  width:75%;
-}    
+    float: left;
+    position: relative;
+    top: -3px;
+    width: 30px;
+    margin-right: 5px;
+}
 
 .dropdown-content a {
   color: black;
@@ -241,7 +237,16 @@ display: block;
   -webkit-appearance:none;
   font-size: 16px;
 }
+.compulsory {
+  color: #E00000;
+  position: relative;
+  left: 7px;
+}
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #808080;
   opacity: 1; /* Firefox */
+}
+label {
+  font-weight: 700;
+  font-size: 16px;  
 }
