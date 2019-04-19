@@ -87,6 +87,11 @@ Post.find({},null,{limit:6,sort:{date:-1}},function(err,latestPosts){
 						if(err)
 							console.log("Error while fetching latestPosts")
 						else{
+							if(latestPosts.length = 6){
+								[latestPosts[2],latestPosts[3],latestPosts[4],latestPosts[5]] = [latestPosts[3],latestPosts[5],latestPosts[2],latestPosts[4]];
+								[topPosts[2],topPosts[3],topPosts[4],topPosts[5]] = [topPosts[3],topPosts[5],topPosts[2],topPosts[4]]
+
+							}
 							res.render('home', {
 							    title: 'Home',
 							    latestPosts:latestPostsData,
