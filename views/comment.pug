@@ -36,20 +36,12 @@ block content
       textArea.addComment(type="text" style="width:100%;padding:10px" placeholder="Add Comment(s)")
       button.btn.btn-success.btn-raised(style="float:right;position:relative;margin-top:5px;margin-bottom:15px;font-size:14px" data-id=post._id) Submit
       div.commentSectionDiv(style="margin-top:35px;padding:20px")
-      - var i =0;
         each comment in comments
-          - i++;
-          if(i%2)
-            div.commentDiv(data-id=comment._id)
-              div.commentUser
-                i.fa.fa-user(aria-hidden="true")
-                span.userName(style="font-weight:bold;") #{comment.userName}
-              div.commentText(style="margin-left:20px")
-                |  #{comment.comment_text}
-          if(i%2 == 0)
-            div.commentDiv(data-id=comment._id)
-              div.commentUser
-                i.fa.fa-user(aria-hidden="true")
-                span.userName(style="font-weight:bold;") #{comment.userName}
-              div.commentText(style="margin-left:20px")
-                |  #{comment.comment_text}
+          div.commentDiv(data-id=comment._id)
+            div.commentUser
+              i.fa.fa-user(aria-hidden="true")
+              span.userName(style="font-weight:bold;") #{comment.userName}
+              if user._id == comment.userId
+                i.fa.fa-trash.clickable.deleteComment(data-id=comment._id)
+            div.commentText(style="margin-left:20px")
+              |  #{comment.comment_text}

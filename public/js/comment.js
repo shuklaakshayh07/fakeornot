@@ -13,4 +13,18 @@ $(document).ready(function(){
 			alert("Data: " + data);
 			});
 	})
+
+	$('.deleteComment').click(function(event){
+		console.log("comment delete icon clicked");
+		var _this = this;
+		var commentId = $(this).attr("data-id");
+		var postId = $(this).closest('.commentBlock_container').attr("data-id");
+		console.log("postId",postId);
+		$.get('/deleteComment/'+commentId,function(status){ console.log("status",status);
+			if(status)
+				{	console.log($(_this).closest('.commentDiv').attr("data-id"));
+					$(_this).closest('.commentDiv').addClass("d-none");
+				}
+		})
+	})
 });

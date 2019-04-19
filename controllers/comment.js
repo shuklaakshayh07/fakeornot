@@ -5,6 +5,7 @@ var http = require('http');
 var url_regex = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/gi;
 var getUrls = require('get-urls');
 var async = require('async');
+const uniqid = require('uniqid');
 
 exports.commentPage = (req,res) =>{
 	console.log(req);
@@ -54,17 +55,30 @@ exports.commentPage = (req,res) =>{
 	// res.send('home');
 }
 
+exports.deleteComment = (req,res) =>{
+	console.log(req);
+	var url = req.url;
+	var userId = req.user._id;
+	var commentId = url.slice(url.lastIndexOf('/')+1);
+	console.log(commentId,userId);
+	Comment.deleteOne(({_id:commentId},{userId:userId}),function(err){
+		if(err){
+			console.log("cant be deleted");
+			res.send(false);
+		}
+		else{
+			console.log(res)
+			res.send(true);
+			}
+	})
+}
+
 exports.addComment = (req,res) =>{
 	console.log(req.user);
 	var userId = req.user._id;
 	var userName = req.user.profile.name;
-	// console.log("userEmail",userEmail);
 	var comment_text = req.body.comment_text;
 	var comment = {};
-	// comment.userId = userId;
-	// comment.comment_text = comment_text;
-	// comment.time = Date.now();
-	// comment.parent_postId = req.body.parent_postId;
 	var newComment = new Comment({
 		comment_text:req.body.comment_text,
 		userId:userId,

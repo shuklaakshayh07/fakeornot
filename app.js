@@ -152,7 +152,8 @@ app.post('/posterActionDislike',postController.dislikePost);
 app.get('/communities/:communtiyType',postController.getCommunityPost);
 app.post('/search',postController.searchPost);
 app.get('/comments/:id',commentController.commentPage);
-app.post('/addComment',commentController.addComment)
+app.post('/addComment',commentController.addComment);
+app.get('/deleteComment/:id',commentController.deleteComment);
 //   function(req,res){
 //   console.log(req);
 // });
