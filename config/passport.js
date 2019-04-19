@@ -12,6 +12,7 @@ const { Strategy: OpenIDStrategy } = require('passport-openid');
 const { OAuthStrategy } = require('passport-oauth');
 const { OAuth2Strategy } = require('passport-oauth');
 const _ = require('lodash');
+const uniqid = require('uniqid');
 
 const User = require('../models/User');
 
@@ -164,6 +165,7 @@ passport.use(new FacebookStrategy({
           user.profile.gender = profile._json.gender;
           user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
           user.profile.location = (profile._json.location) ? profile._json.location.name : '';
+          user._id = uniqid();
           user.save((err) => {
             done(err, user);
           });
@@ -281,6 +283,7 @@ passport.use(new TwitterStrategy({
       user.profile.name = profile.displayName;
       user.profile.location = profile._json.location;
       user.profile.picture = profile._json.profile_image_url_https;
+      user._id = uniqid();
       user.save((err) => {
         done(err, user);
       });
@@ -337,6 +340,7 @@ passport.use(new GoogleStrategy({
           user.profile.name = profile.displayName;
           user.profile.gender = profile._json.gender;
           user.profile.picture = profile._json.image.url;
+          user._id = uniqid();
           user.save((err) => {
             done(err, user);
           });
@@ -399,6 +403,7 @@ passport.use(new LinkedInStrategy({
           user.profile.location = profile._json.location.name;
           user.profile.picture = profile._json.pictureUrl;
           user.profile.website = profile._json.publicProfileUrl;
+          user._id = uniqid();
           user.save((err) => {
             done(err, user);
           });

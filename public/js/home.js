@@ -23,7 +23,7 @@ $(document).ready(function(){
 			$(".searchInput").val('');
 	})
 
-	$('.fa-thumbs-up').click(function(event){
+	$('.thumbUp').click(function(event){
 		console.log("like",$(this).attr("data-id"));
 		var postId = $(this).attr("data-id");
 		var postMeta = {};
@@ -32,18 +32,23 @@ $(document).ready(function(){
 		var likeCount = parseInt($('.card[data-id='+postId+']').find('.likeCount').html());
 		var dislikeCount = parseInt($('.card[data-id='+postId+']').find('.dislikeCount').html());
 		$.post("/posterActionLike",postMeta,function(data, status){ console.log("data",data);
-			if(data['like'] && data["prev_type"]){console.log("1st");
+			if(data["prev_type"] == 1){
 				$('.card[data-id='+postId+']').find('.likeCount').html(likeCount-1);
-				$('.card[data-id='+postId+']').find('.fa-thumbs-up').css('color','');	
+				$('.card[data-id='+postId+']').find('.likeCount').removeClass('active');
+				$('.card[data-id='+postId+']').find('.thumbUp').removeClass('active');	
 			}
-			else if(data["prev_type"] == -1){console.log("2nd");
+			else if(data["prev_type"] == -1){
 				$('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount-1);
-				$('.card[data-id='+postId+']').find('.fa-thumbs-down').css('color','');
-			}
-			else if(data["like"]){console.log("3rd");
-				console.log($('.card[data-id='+postId+']').find('.likeCount'));
+				$('.card[data-id='+postId+']').find('.dislikeCount').removeClass('active');
+				$('.card[data-id='+postId+']').find('.thumbDown').removeClass('active');
 				$('.card[data-id='+postId+']').find('.likeCount').html(likeCount+1);
-				$('.card[data-id='+postId+']').find('.fa-thumbs-up').css('color','rgb(94, 152, 170)');
+				$('.card[data-id='+postId+']').find('.likeCount').addClass('active');
+				$('.card[data-id='+postId+']').find('.thumbUp').addClass('active');
+			}
+			else if(data["prev_type"] == 0){
+				$('.card[data-id='+postId+']').find('.likeCount').html(likeCount+1);
+				$('.card[data-id='+postId+']').find('.likeCount').addClass('active');
+				$('.card[data-id='+postId+']').find('.thumbUp').addClass('active');
 			}
 		});
 	})
@@ -52,26 +57,31 @@ $(document).ready(function(){
 		console.log("comments button clicked");
 	})
 
-	$('.fa-thumbs-down').click(function(){
+	$('.thumbDown').click(function(){
 		// console.log("dislike",event);
 		var postId = $(this).attr("data-id")
 		var postMeta = {};
 		postMeta["postId"] = postId;
 		var dislikeCount = parseInt($('.card[data-id='+postId+']').find('.dislikeCount').html());
 		var likeCount = parseInt($('.card[data-id='+postId+']').find('.likeCount').html());
-		// $('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount+1);
 		$.post("/posterActionDislike",postMeta,function(data, status){
-			if(data["dislike"] && data["prev_type"] == -1){
+			if(data["prev_type"] == -1){
 				$('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount-1);
-				$('.card[data-id='+postId+']').find('.fa-thumbs-down').css('color','');	
+				$('.card[data-id='+postId+']').find('.dislikeCount').removeClass('active');
+				$('.card[data-id='+postId+']').find('.thumbDown').removeClass('active');
 			}
-			else if(data["prev_type"]){
+			else if(data["prev_type"] == 1){
 				$('.card[data-id='+postId+']').find('.likeCount').html(likeCount-1);
-				$('.card[data-id='+postId+']').find('.fa-thumbs-up').css('color','');
-			}
-			else if(data["dislike"]){
+				$('.card[data-id='+postId+']').find('.likeCount').removeClass('active');
+				$('.card[data-id='+postId+']').find('.thumbUp').removeClass('active');
 				$('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount+1);
-				$('.card[data-id='+postId+']').find('.fa-thumbs-down').css('color','red');
+				$('.card[data-id='+postId+']').find('.dislikeCount').addClass('active');
+				$('.card[data-id='+postId+']').find('.thumbDown').addClass('active');
+			}
+			else if(data["prev_type"] == 0){
+				$('.card[data-id='+postId+']').find('.dislikeCount').html(dislikeCount+1);
+				$('.card[data-id='+postId+']').find('.dislikeCount').addClass('active');
+				$('.card[data-id='+postId+']').find('.thumbDown').addClass('active');
 			}
 		});
 	})

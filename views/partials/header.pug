@@ -17,7 +17,10 @@
                 a.nav-link(href="/communities/world") World
                 a.nav-link(href="/communities/currentaffairs") Current Affairs
         li.nav-item(class=(title === 'MyPost') ? 'active' : undefined)
-          a.nav-link(href='/mypost') My Post
+          if user
+            a.nav-link(href='/mypost') My Post
+          else
+            a.nav-link(href='/login') My Post
         li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
           a.nav-link(href='/contact') Contact
       form.searchForm.ml-auto(action="/search", method="post")

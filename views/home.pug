@@ -43,18 +43,19 @@ block content
           if user
             .actionBlock
               .actionOption
-                .likeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;")
-                  if post.likeFlag
-                    i.far.fa-clickable.fa-thumbs-up.ab(style="float:left;color:rgb(94, 152, 170);margin-top:2px;font-size:18px" data-id=post._id)
-                  else
-                    i.far.fa-clickable.fa-thumbs-up.ba(style="float:left;margin-top:2px;font-size:18px;" data-id=post._id)
-                  span.likeCount(style="float:left;font-size:16px;position:relative;top:2px") #{post.likes}
-                .dislikeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;margin-left:1rem")
-                  span.dislikeCount(style="float:right;position:relative;top:2px;font-size:16px") #{post.dislikes}
-                  if post.dislikeFlag
-                    i.far.fa-clickable.fa-thumbs-down(style="float:left;color:red;margin-top:4px;font-size:18px" data-id=post._id)
-                  else
-                    i.far.fa-clickable.fa-thumbs-down(style="float:left;margin-top:4px;font-size:18px" data-id=post._id)
+                if post.likeFlag
+                  i.material-icons.clickable.thumbUp.active(data-id=post._id) thumb_up
+                  span.likeCount.active #{post.likes}
+                else
+                  i.material-icons.clickable.thumbUp(data-id=post._id) thumb_up
+                  span.likeCount #{post.likes}
+                if post.dislikeFlag
+                  i.material-icons.clickable.thumbDown.active(data-id=post._id) thumb_down
+                  span.dislikeCount.active #{post.dislikes}
+                else
+                  i.material-icons.clickable.thumbDown(data-id=post._id) thumb_down
+                  span.dislikeCount #{post.dislikes}
                 .commentDiv(style="float:right;position:relative;top:4px;font-size:18px")
                   a.commentPost(href="/comments/"+post._id)
                     i.fa.fa-clickable.fa-comments(aria-hidden="true")
+                
