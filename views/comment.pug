@@ -2,7 +2,7 @@ extends layout
 block content
   h1 Fake News Repo
   .row
-    .col-md-8.card.offset-md-2(data-id=post._id)
+    .col-md-8.card.offset-md-2(data-id=post._id style="padding-left:0;padding-right:0;")
       if post.media
         .card-block.mediaPreview
           a.mediadiv(href=post.url)
@@ -18,36 +18,36 @@ block content
       if user
         .actionBlock
           .actionOption
-            .likeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;")
-              if post.likeFlag
-                i.far.fa-clickable.fa-thumbs-up.ab(style="float:left;color:rgb(94, 152, 170);margin-top:2px;font-size:18px" data-id=post._id)
-              else
-                i.far.fa-clickable.fa-thumbs-up.ba(style="float:left;margin-top:2px;font-size:18px;" data-id=post._id)
-              span.likeCount(style="float:left;font-size:16px;position:relative;top:2px") #{post.likes}
-            .dislikeDiv(style="max-height:25px;max-width:45px;display:inline;float:left;padding:2px;margin-left:1rem")
-              span.dislikeCount(style="float:right;position:relative;top:2px;font-size:16px") #{post.dislikes}
-              if post.dislikeFlag
-                i.far.fa-clickable.fa-thumbs-down(style="float:left;color:red;margin-top:4px;font-size:18px" data-id=post._id)
-              else
-                i.far.fa-clickable.fa-thumbs-down(style="float:left;margin-top:4px;font-size:18px" data-id=post._id)
+            if post.likeFlag
+              i.material-icons.clickable.thumbUp.active(data-id=post._id) thumb_up
+              span.likeCount.active #{post.likes}
+            else
+              i.material-icons.clickable.thumbUp(data-id=post._id) thumb_up
+              span.likeCount #{post.likes}
+            if post.dislikeFlag
+              i.material-icons.clickable.thumbDown.active(data-id=post._id) thumb_down
+              span.dislikeCount.active #{post.dislikes}
+            else
+              i.material-icons.clickable.thumbDown(data-id=post._id) thumb_down
+              span.dislikeCount #{post.dislikes}
   .row  
-    .commentBlock_container.col-md-8.offset-md-2(class="post:"+post._id data-id=post._id style="display:inline;border:1px white solid;margin-top:5px;padding:10px;")
+    .commentBlock_container.col-md-8.offset-md-2(data-id=post._id)
       h6(style="margin-left:10px") Comments
       textArea.addComment(type="text" style="width:100%;padding:10px" placeholder="Add Comment(s)")
-      button.btn.btn-success.btn-raised(style="float:right;position:relative;margin-top:5px;margin-bottom:15px;font-size:12px" data-id=post._id) Submit
+      button.btn.btn-success.btn-raised(style="float:right;position:relative;margin-top:5px;margin-bottom:15px;font-size:14px" data-id=post._id) Submit
       div.commentSectionDiv(style="margin-top:35px;padding:20px")
       - var i =0;
         each comment in comments
           - i++;
           if(i%2)
-            div.commentDiv(data-id=comment._id style="padding:5px;background-color:#eff0f0")
+            div.commentDiv(data-id=comment._id)
               div.commentUser
                 i.fa.fa-user(aria-hidden="true")
                 span.userName(style="font-weight:bold;") #{comment.userName}
               div.commentText(style="margin-left:20px")
                 |  #{comment.comment_text}
           if(i%2 == 0)
-            div.commentDiv(data-id=comment._id style="padding:5px;")
+            div.commentDiv(data-id=comment._id)
               div.commentUser
                 i.fa.fa-user(aria-hidden="true")
                 span.userName(style="font-weight:bold;") #{comment.userName}
