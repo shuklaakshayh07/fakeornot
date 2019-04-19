@@ -344,3 +344,32 @@ label {
 .card:hover {
   border: 2px solid #2577fb;
 }
+
+/*Comments*/ 
+
+.commentBlock_container {
+  display:inline;
+  border:1px white solid;
+  margin-top:5px;
+  padding:10px;
+  border-radius:18px; 
+}
+.commentDiv:nth-child(odd) {
+  padding: 5px;
+  background-color: #eff0f0;
+}
+.commentDiv:nth-child(even) {
+  padding: 5px;
+
+}
+/*.actionOption .commentDiv {
+
+}*/
+.commentPost {
+  color: #212529;
+  float:right;
+  position:relative;
+  top:-4px;
+  font-size:18px;
+  background-color: #ffffff;
+}
