@@ -96,8 +96,10 @@ Post.find({},function(err,result){
 			postObj.linkTitle = obj.linkTitle;
 			if(obj.community)
 				postObj.community = obj.community.toUpperCase();
-			if(obj.linkDescription && obj.linkDescription.length>150)
-				postObj.linkDescription = obj.linkDescription.slice(0,147)+"....";
+			if(obj.linkDescription && obj.linkDescription.length>150){
+				var breakPoint = obj.linkDescription.slice(0,150).lastIndexOf(' ');
+				postObj.linkDescription = obj.linkDescription.slice(0,breakPoint) + '...';
+			}
 			else
 				postObj.linkDescription = obj.linkDescription;
 			if(!postObj.videoFlag)
