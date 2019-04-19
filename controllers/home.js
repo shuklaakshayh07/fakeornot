@@ -58,73 +58,88 @@ var process_preview = function(postObjects, funccallback){
 }
 
 exports.index = (req, res) => {
-Post.find({},function(err,result){
-	// if(result.length == 0)
-	// 	console.log('entered if');
-	// 	{	res.render('home', {
-	// 	    title: 'Home',
-	// 	    posts:[]
-	// 		})
-	// 	}
-	if(req.user){
-		var userId = req.user._id;	
-	}
-	else{
-		var userId = "";
-	}
-	console.log('userId',userId)
-	var i = 0;
-	var finalResult = [];
-	console.log('result',result)
-	if(result && result.length){
-		result.forEach(function(obj){
-			console.log('obj',obj)
-			i++;
-			var postObj = {};
-			postObj.likeFlag = false;
-			postObj.dislikeFlag = false;
-			postObj._id = obj._id;
-			postObj.postText = obj.postText;
-			postObj.likes = obj.likes;
-			postObj.dislikes = obj.dislikes;
-			postObj.mediaType = obj.mediaType;
-			postObj.videoObj = obj.videoObj;
-			postObj.imageSrc = obj.imageSrc;
-			postObj.media = obj.mediaFlag;
-			postObj.videoFlag = obj.videoFlag;
-			postObj.url = obj.url;
-			postObj.linkTitle = obj.linkTitle;
-			if(obj.community)
-				postObj.community = obj.community.toUpperCase();
-			if(obj.linkDescription && obj.linkDescription.length>150){
-				var breakPoint = obj.linkDescription.slice(0,150).lastIndexOf(' ');
-				postObj.linkDescription = obj.linkDescription.slice(0,breakPoint) + '...';
-			}
-			else
-				postObj.linkDescription = obj.linkDescription;
-			if(!postObj.videoFlag)
-				postObj.imageFlag = obj.imageFlag;
-			console.log("temp after appending");
-			if(obj.likeVotes.indexOf(userId) != -1)
-				postObj.likeFlag = true;
-			if(obj.dislikeVotes.indexOf(userId) != -1)
-				postObj.dislikeFlag = true;
-			finalResult.push(postObj);
-			if(i == result.length)
+Post.find({},null,{limit:6,sort:{date:-1}},function(err,latestPosts){
+	Post.find({},null,{limit:6,sort:{likes:-1,dislikes:1}},function(err,topPosts){
+		if(req.user){
+			var userId = req.user._id;	
+		}
+		else{
+			var userId = "";
+		}
+		console.log('userId',userId)
+		var latestPostsData = [];
+		var topPostsData = []
+		console.log('latestPosts',latestPosts)
+		if(latestPosts && latestPosts.length){
+			async.forEachOfSeries(latestPosts,function(latestPost,index,latestPostCallback){
+				console.log('latestPost',latestPost);
+				latestPostsData.push(formatPost(latestPost,userId))
+				latestPostCallback();
+			},function(err){
+				if(err)
+					console.log("Error while fetching latestPosts")
+				else{
+					async.forEachOfSeries(topPosts,function(topPost,index,topPostCallback){
+						console.log('topPost',topPost);
+						topPostsData.push(formatPost(topPost,userId))
+						topPostCallback();
+					},function(err){
+						if(err)
+							console.log("Error while fetching latestPosts")
+						else{
+							res.render('home', {
+							    title: 'Home',
+							    latestPosts:latestPostsData,
+							    topPosts:topPostsData,
+							    communityPage:false
+							})
+						}
+					})
+				}
+			})
+		}else{
 			{	res.render('home', {
 			    title: 'Home',
-			    posts:finalResult,
+			    latestPosts:[],
+			    topPosts:[],
 			    communityPage:false
 				})
 			}
-		})
-	}else{
-		{	res.render('home', {
-		    title: 'Home',
-		    posts:[],
-		    communityPage:false
-			})
 		}
-	}
+	})
+	
 })
 };
+
+function formatPost(post,userId){
+	var postObj = {};
+	postObj.likeFlag = false;
+	postObj.dislikeFlag = false;
+	postObj._id = post._id;
+	postObj.postText = post.postText;
+	postObj.likes = post.likes;
+	postObj.dislikes = post.dislikes;
+	postObj.mediaType = post.mediaType;
+	postObj.videoObj = post.videoObj;
+	postObj.imageSrc = post.imageSrc;
+	postObj.media = post.mediaFlag;
+	postObj.videoFlag = post.videoFlag;
+	postObj.url = post.url;
+	postObj.linkTitle = post.linkTitle;
+	if(post.community)
+		postObj.community = post.community.toUpperCase();
+	if(post.linkDescription && post.linkDescription.length>150){
+		var breakPoint = post.linkDescription.slice(0,150).lastIndexOf(' ');
+		postObj.linkDescription = post.linkDescription.slice(0,breakPoint) + '...';
+	}
+	else
+		postObj.linkDescription = post.linkDescription;
+	if(!postObj.videoFlag)
+		postObj.imageFlag = post.imageFlag;
+	console.log("temp after appending");
+	if(post.likeVotes.indexOf(userId) != -1)
+		postObj.likeFlag = true;
+	if(post.dislikeVotes.indexOf(userId) != -1)
+		postObj.dislikeFlag = true;
+	return postObj;
+}
