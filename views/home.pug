@@ -23,10 +23,44 @@ block content
               option(value = "world") World
               option(value = "currentAffairs") Current Affairs
           button.btn.btn-primary(style="border-radius:0.25rem;background-color:#2577fb;border-color:#0461f7;") Submit
-  .row(style="margin-top:15px; text-align: center;padding:30px;padding-right:5px;padding-left:5px;")
+  .row(style="text-align: center;padding:30px;padding-right:5px;padding-left:5px;")
     h2.col-xs-12.col-md-12(style="margin-top:1rem;text-align:left;") Latest Posts
     .card-columns.col-md-12
-      each post in posts
+      each post in latestPosts
+        .card(data-id=post._id)
+          if post.media
+            .card-block.mediaPreview
+              a.mediadiv(href=post.url)
+                if post.videoFlag
+                  .iframeDiv
+                    iframe(src=post.videoObj.src)
+                if post.imageFlag
+                  .imageDiv.image-16by9
+                    img(src=post.imageSrc)
+                a.urlTitle(href=post.url target="_blank" style="font-size:16px;")
+                  label(style="font-weight:bold;color:black;padding:0 7px;margin-bottom:0px") #{post.linkTitle}
+                div(style="font-size:12px;text-align:left;padding-left:5px;color:#9b9b9b;padding:0 7px") #{post.linkDescription}
+          if user
+            .actionBlock
+              .actionOption
+                if post.likeFlag
+                  i.material-icons.clickable.thumbUp.active(data-id=post._id) thumb_up
+                  span.likeCount.active #{post.likes}
+                else
+                  i.material-icons.clickable.thumbUp(data-id=post._id) thumb_up
+                  span.likeCount #{post.likes}
+                if post.dislikeFlag
+                  i.material-icons.clickable.thumbDown.active(data-id=post._id) thumb_down
+                  span.dislikeCount.active #{post.dislikes}
+                else
+                  i.material-icons.clickable.thumbDown(data-id=post._id) thumb_down
+                  span.dislikeCount #{post.dislikes}
+                a.commentPost(href="/comments/"+post._id)
+                  i.fa.fa-clickable.fa-comments(aria-hidden="true")
+  .row(style="text-align: center;padding:30px;padding-right:5px;padding-left:5px;")
+    h2.col-xs-12.col-md-12(style="margin-top:1rem;text-align:left;") Top Posts
+    .card-columns.col-md-12
+      each post in topPosts
         .card(data-id=post._id)
           if post.media
             .card-block.mediaPreview
