@@ -67,10 +67,6 @@ textarea {
   margin: -15px 15px -15px;
   border-radius: 50%;
 }
-.fa-clickable {
-    cursor:pointer;
-    outline:none;
-}
 .navbar{
   padding-top: 0px;
   padding-bottom: 0px;
@@ -261,18 +257,15 @@ display: block;
   -webkit-appearance:none;
   font-size: 16px;
 }
-.compulsory {
-  color: #E00000;
-  position: relative;
-  left: 7px;
-}
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #808080;
-  opacity: 1; /* Firefox */
-}
 label {
   font-weight: 700;
   font-size: 16px;  
+}
+/* generic styles*/ 
+
+.clickable {
+  cursor:pointer;
+  outline:none;
 }
 .image-16by9 {
   position: relative;
@@ -300,6 +293,32 @@ label {
   border-top-left-radius: 18px;
   border-top-right-radius: 18px;
 }
+
+.compulsory {
+  color: #E00000;
+  position: relative;
+  left: 7px;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #808080;
+  opacity: 1; /* Firefox */
+}
+.thumbUp,.thumbDown {
+  font-size: 18px;
+}
+.thumbUp.active,.likeCount.active {
+  color: #2577fb;
+}
+.thumbDown.active,.dislikeCount.active {
+  color: #E00000;
+}
+.likeCount,.dislikeCount {
+  margin: 0 15px 0 5px;
+  font-size: 16px;
+  position: relative;
+  top:-3px;
+}
+
 /*card layout css*/
 
 .card-columns {
@@ -320,6 +339,7 @@ label {
 }
 .actionOption {
   padding: 0 5px;
+  text-align: left;
 }
 .card:hover {
   border: 2px solid #2577fb;

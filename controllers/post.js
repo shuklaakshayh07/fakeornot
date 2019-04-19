@@ -109,25 +109,23 @@ exports.likePost = (req,res)=>{
 		Post.findOne({_id:postId},function(err,obj){console.log()
 			if(obj.dislikeVotes.indexOf(userId) != -1){
 				Post.update({_id:postId},{ $inc: {dislikes:-1},$pull:{dislikeVotes:userId}},function(err,resp){
-					console.log("right block",resp);
-					data["dislike"] = false;
-					data["like"] = false;
-					data["prev_type"] = -1; 
-					res.send(data);
+					Post.update({_id:postId},{ $inc: {likes:1},$push:{likeVotes:userId}},function(err){
+						console.log("undo like",postId);
+						data["prev_type"] = -1; 
+						res.send(data);
+					})
 				});
 			}
 			else if(obj.likeVotes.indexOf(userId) != -1){
 				Post.update({_id:postId},{ $inc: {likes:-1},$pull:{likeVotes:userId}},function(err){
-					console.log("updated unlike");
+					console.log("liked after disliking",postId);
 					data["prev_type"] = 1;
-					data["dislike"] = false;
-					data["like"] = true;
 					res.send(data);
 				});
 			}
 			else{
 				Post.update({_id:postId},{ $inc: {likes:1},$push:{likeVotes:userId}},function(err){
-					console.log("updated like");
+					console.log("liked",postId);
 					res.send(data);
 				})	
 			}
@@ -147,25 +145,23 @@ exports.dislikePost = (req,res)=>{
 		Post.findOne({_id:postId},function(err,obj){
 			if(obj.likeVotes.indexOf(userId) != -1){console.log("in 1st if");
 				Post.update({_id:postId},{ $inc: {likes:-1},$pull:{likeVotes:userId}},function(err){
-					console.log("in process");
-					data["dislike"] = false;
-					data["like"] = false;
-					data["prev_type"] = 1; 
-					res.send(data);
+					Post.update({_id:postId},{ $inc: {dislikes:1},$push:{dislikeVotes:userId}},function(err){
+						console.log('disliked after liking for',postId);
+						data["prev_type"] = 1; 
+						res.send(data);
+					})
 				});
 			}
 			else if(obj.dislikeVotes.indexOf(userId) != -1){
 				Post.update({_id:postId},{ $inc: {dislikes:-1},$pull:{dislikeVotes:userId}},function(err){
-					console.log("updated un-dislike");
-					data["dislike"] = true;
-					data["like"] = false;
+					console.log('undo dislike for',postId);
 					data["prev_type"] = -1;
 					res.send(data);
 				});
 			}
 			else{
 				Post.update({_id:postId},{ $inc: {dislikes:1},$push:{dislikeVotes:userId}},function(err){
-					console.log("updated dislike");
+					console.log('disliked',postId);
 					res.send(data);
 				})	
 			}
