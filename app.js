@@ -35,6 +35,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const postController = require('./controllers/post');
+const commentController = require('./controllers/comment.js');
 
 /**
  * API keys and Passport configuration.
@@ -150,6 +151,8 @@ app.post('/posterActionLike',postController.likePost);
 app.post('/posterActionDislike',postController.dislikePost);
 app.get('/communities/:communtiyType',postController.getCommunityPost);
 app.post('/search',postController.searchPost);
+app.get('/comments/:id',commentController.commentPage);
+app.post('/addComment',commentController.addComment)
 //   function(req,res){
 //   console.log(req);
 // });

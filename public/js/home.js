@@ -48,6 +48,10 @@ $(document).ready(function(){
 		});
 	})
 
+	$('.fa-comments').click(function(){
+		console.log("comments button clicked");
+	})
+
 	$('.fa-thumbs-down').click(function(){
 		// console.log("dislike",event);
 		var postId = $(this).attr("data-id")

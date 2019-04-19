@@ -6,6 +6,10 @@ block content
   form(id='signup-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Name
+      .col-md-7
+        input.form-control(type='name', name='displayName', id='displayName', placeholder='Name', autofocus, autocomplete='display-name', required)
+    .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Email
       .col-md-7
         input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, autocomplete='email', required)

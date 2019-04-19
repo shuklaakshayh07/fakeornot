@@ -69,6 +69,7 @@ exports.logout = (req, res) => {
  * Signup page.
  */
 exports.getSignup = (req, res) => {
+  console.log("over here");
   if (req.user) {
     return res.redirect('/');
   }
@@ -93,11 +94,13 @@ exports.postSignup = (req, res, next) => {
     req.flash('errors', errors);
     return res.redirect('/signup');
   }
-
+  var profile = {};
+  profile.name = req.body.displayName;
   const user = new User({
     _id: uniqid(),
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    profile: profile
   });
 
   User.findOne({ email: req.body.email }, (err, existingUser) => {

@@ -55,5 +55,6 @@ block content
                     i.far.fa-clickable.fa-thumbs-down(style="float:left;color:red;margin-top:4px;font-size:18px" data-id=post._id)
                   else
                     i.far.fa-clickable.fa-thumbs-down(style="float:left;margin-top:4px;font-size:18px" data-id=post._id)
-                .commentDiv
-                  i.fa.fa-comments-o
+                .commentDiv(style="float:right;position:relative;top:4px;font-size:18px")
+                  a.commentPost(href="/comments/"+post._id)
+                    i.fa.fa-clickable.fa-comments(aria-hidden="true")
