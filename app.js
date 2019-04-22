@@ -16,7 +16,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const expressValidator = require('express-validator');
-const expressStatusMonitor = require('express-status-monitor');
+// const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
 
@@ -46,7 +46,8 @@ const passportConfig = require('./config/passport');
  * Create Express server.
  */
 const app = express();
-
+const server = app.listen(process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
+var io = require('socket.io').listen(server);
 /**
  * Connect to MongoDB.
  */
@@ -64,10 +65,19 @@ mongoose.connection.on('error', (err) => {
  * Express configuration.
  */
 app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
-app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
+console.log("over here");
+var socketObj = null;
+io.on('connection', function(socket) {
+   console.log('A user connected');
+   //Sending an object when emmiting an event
+   //Whenever someone disconnects this piece of code executed
+   socket.on('disconnect', function () {
+      console.log('A user disconnected');
+   });
+});
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(expressStatusMonitor());
+// app.use(expressStatusMonitor());
 app.use(compression());
 app.use(sass({
   src: path.join(__dirname, 'public'),
@@ -152,11 +162,14 @@ app.post('/posterActionDislike',postController.dislikePost);
 app.get('/communities/:communtiyType',postController.getCommunityPost);
 app.post('/search',postController.searchPost);
 app.get('/comments/:id',commentController.commentPage);
-app.post('/addComment',commentController.addComment);
+app.post('/addComment',function(req,res){
+    commentController.addComment(req,res,function(data){
+    io.sockets.emit('newComment:'+data.parentPostId,data);
+  })
+});
+
 app.get('/deleteComment/:id',commentController.deleteComment);
-//   function(req,res){
-//   console.log(req);
-// });
+
 
 /**
  * API examples routes.
@@ -262,7 +275,7 @@ if (process.env.NODE_ENV === 'development') {
  * Start Express server.
  */
 app.listen(app.get('port'), () => {
-  console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
+  console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080 , app.get('env'));
   console.log('  Press CTRL-C to stop\n');
 });
 

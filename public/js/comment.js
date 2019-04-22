@@ -1,5 +1,13 @@
+var host = window.location.host; 
+var socket = io('ws://'+host, {transports: ['websocket']});
+
 $(document).ready(function(){
-	console.log("comment Page ready");
+	var postId = $('.commentBlock_container').attr("data-id");
+	socket.on('newComment:'+postId, function(data){
+		var newDiv = '<div class="commentDiv" data-id="'+data._id+'"><div class="commentUser"><i class="fa fa-user" aria-hidden="true"></i><span class="userName" style="font-weight:bold;">'+data.userName+'</span></div><div class="commentText" style="margin-left:20px">'+data.comment_text+ '</div></div>';
+		$('.commentSectionDiv').append(newDiv);
+	});
+
 
 	$('.btn-raised').click(function(event){
 		console.log("submit clicked");
@@ -19,7 +27,6 @@ $(document).ready(function(){
 		var _this = this;
 		var commentId = $(this).attr("data-id");
 		var postId = $(this).closest('.commentBlock_container').attr("data-id");
-		console.log("postId",postId);
 		$.get('/deleteComment/'+commentId,function(status){ console.log("status",status);
 			if(status)
 				{	console.log($(_this).closest('.commentDiv').attr("data-id"));

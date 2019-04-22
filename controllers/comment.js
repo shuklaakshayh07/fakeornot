@@ -8,11 +8,11 @@ var async = require('async');
 const uniqid = require('uniqid');
 
 exports.commentPage = (req,res) =>{
-	console.log(req);
 	var url = req.url;
-	var userId = req.user._id;
+	var userId = "";
+	if(req.user)
+		userId = req.user._id;
 	var postId = url.slice(url.lastIndexOf('/')+1);
-	console.log(postId);
 	var post = Post.find({_id:postId},function(err,response){
 		var obj = response[0];
 		var postObj = {};
@@ -37,13 +37,11 @@ exports.commentPage = (req,res) =>{
 			postObj.linkDescription = obj.linkDescription;
 		if(!postObj.videoFlag)
 			postObj.imageFlag = obj.imageFlag;
-		console.log("temp after appending");
 		if(obj.likeVotes.indexOf(userId) != -1)
 			postObj.likeFlag = true;
 		if(obj.dislikeVotes.indexOf(userId) != -1)
 			postObj.dislikeFlag = true;
 		var comments = Comment.find({parentPostId:postId},function(err,commentRes){
-			console.log(commentRes);
 			res.render('comment', {
 		    title: 'comment',
 		    post:postObj,
@@ -56,30 +54,29 @@ exports.commentPage = (req,res) =>{
 }
 
 exports.deleteComment = (req,res) =>{
-	console.log(req);
+	// console.log(req);
 	var url = req.url;
 	var userId = req.user._id;
 	var commentId = url.slice(url.lastIndexOf('/')+1);
-	console.log(commentId,userId);
-	Comment.deleteOne(({_id:commentId},{userId:userId}),function(err){
+	Comment.deleteOne({$and:[{_id:commentId},{userId:userId}]},function(err){
 		if(err){
 			console.log("cant be deleted");
 			res.send(false);
 		}
 		else{
-			console.log(res)
 			res.send(true);
 			}
 	})
 }
 
-exports.addComment = (req,res) =>{
-	console.log(req.user);
+exports.addComment = (req,res,callback) =>{
 	var userId = req.user._id;
 	var userName = req.user.profile.name;
 	var comment_text = req.body.comment_text;
 	var comment = {};
+	var id = uniqid();
 	var newComment = new Comment({
+		_id:id,
 		comment_text:req.body.comment_text,
 		userId:userId,
 		time:Date.now(),
@@ -88,10 +85,8 @@ exports.addComment = (req,res) =>{
 
 	})
 	newComment.save(function(response){
-		console.log(response);
-		res.send("comment is has been posted");
+		callback(newComment);
 	})
-	// console.log(req.user._id);
 
 }
 

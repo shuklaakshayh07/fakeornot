@@ -23,7 +23,7 @@ var get_preview = function(url, callback) {
             results = results + chunk;
         });
         res.on('end', function () {
-            console.log(results);
+            // console.log(results);
             callback(results);
         });
     });
@@ -34,11 +34,11 @@ var process_preview = function(postObjects, funccallback){
 	async.forEach(postObjects,function(postObj,callback){
 		if(postObj.url){
 			get_preview("https://www.youtube.com/watch?v=kcKQI0J6pmU",function(result){
-					console.log(result);
+					// console.log(result);
 				postObj.title = result.title;
 				postObj.description = result.description;
 				postObj.expandedUrl = result.expandedUrl;
-				console.log(i++,result.media);
+				// console.log(i++,result.media);
 				result.media.forEach(function(media){
 					if(media.type == video){
 						postObj.video = {};
@@ -66,13 +66,13 @@ Post.find({},null,{limit:6,sort:{date:-1}},function(err,latestPosts){
 		else{
 			var userId = "";
 		}
-		console.log('userId',userId)
+		// console.log('userId',userId)
 		var latestPostsData = [];
 		var topPostsData = []
-		console.log('latestPosts',latestPosts)
+		// console.log('latestPosts',latestPosts)
 		if(latestPosts && latestPosts.length){
 			async.forEachOfSeries(latestPosts,function(latestPost,index,latestPostCallback){
-				console.log('latestPost',latestPost);
+				// console.log('latestPost',latestPost);
 				latestPostsData.push(formatPost(latestPost,userId))
 				latestPostCallback();
 			},function(err){
@@ -80,7 +80,7 @@ Post.find({},null,{limit:6,sort:{date:-1}},function(err,latestPosts){
 					console.log("Error while fetching latestPosts")
 				else{
 					async.forEachOfSeries(topPosts,function(topPost,index,topPostCallback){
-						console.log('topPost',topPost);
+						// console.log('topPost',topPost);
 						topPostsData.push(formatPost(topPost,userId))
 						topPostCallback();
 					},function(err){
@@ -141,7 +141,7 @@ function formatPost(post,userId){
 		postObj.linkDescription = post.linkDescription;
 	if(!postObj.videoFlag)
 		postObj.imageFlag = post.imageFlag;
-	console.log("temp after appending");
+	// console.log("temp after appending");
 	if(post.likeVotes.indexOf(userId) != -1)
 		postObj.likeFlag = true;
 	if(post.dislikeVotes.indexOf(userId) != -1)

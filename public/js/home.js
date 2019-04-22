@@ -1,8 +1,8 @@
+var serverUrl = window.location.href; console. log(serverUrl);
+var socket = io('ws://localhost:8080', {transports: ['websocket']});
 $(document).ready(function(){
 	console.log("ready");
-	
 	$('.postForm').submit(function(event){
-		console.log("over here",event);
 		var postObject = {};
 		postObject['post_text'] = $('.fill-post').val();
 		postObject['community'] = $('.communities').val();
@@ -17,21 +17,17 @@ $(document).ready(function(){
 	})
 	
 	$('.searchInput').click(function(event){
-		console.log("submitted");
-		console.log("search",$(".searchInput").val());
 		if($(".searchInput").val() == "search in posts")
 			$(".searchInput").val('');
 	})
 
 	$('.thumbUp').click(function(event){
-		console.log("like",$(this).attr("data-id"));
 		var postId = $(this).attr("data-id");
 		var postMeta = {};
 		postMeta["postId"] = postId;
-		console.log("before calling like",postMeta);
 		var likeCount = parseInt($('.card[data-id='+postId+']').find('.likeCount').html());
 		var dislikeCount = parseInt($('.card[data-id='+postId+']').find('.dislikeCount').html());
-		$.post("/posterActionLike",postMeta,function(data, status){ console.log("data",data);
+		$.post("/posterActionLike",postMeta,function(data, status){ 
 			if(data["prev_type"] == 1){
 				$('.card[data-id='+postId+']').find('.likeCount').html(likeCount-1);
 				$('.card[data-id='+postId+']').find('.likeCount').removeClass('active');
@@ -58,7 +54,6 @@ $(document).ready(function(){
 	})
 
 	$('.thumbDown').click(function(){
-		// console.log("dislike",event);
 		var postId = $(this).attr("data-id")
 		var postMeta = {};
 		postMeta["postId"] = postId;
