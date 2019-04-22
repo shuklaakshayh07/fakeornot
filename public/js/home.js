@@ -1,5 +1,5 @@
 var serverUrl = window.location.href; console. log(serverUrl);
-var socket = io('ws://localhost:8080', {transports: ['websocket']});
+var socket = io(serverUrl, {transports: ['websocket']});
 $(document).ready(function(){
 	console.log("ready");
 	$('.postForm').submit(function(event){

@@ -1,5 +1,5 @@
 var host = window.location.host; 
-var socket = io('ws://'+host, {transports: ['websocket']});
+var socket = io(host, {transports: ['websocket']});
 
 $(document).ready(function(){
 	var postId = $('.commentBlock_container').attr("data-id");
@@ -18,8 +18,8 @@ $(document).ready(function(){
 		commentObj.comment_text = comment_value;
 		console.log("commentObj",commentObj);
 		$.post("/addComment",commentObj,function(data, status){
-			alert("Data: " + data);
-			});
+			$('.addComment').val('');
+		});
 	})
 
 	$('.deleteComment').click(function(event){
